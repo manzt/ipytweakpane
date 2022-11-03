@@ -9,7 +9,7 @@ name = "tweakpane"
 description = "Python bindings for Tweakpane UI"
 readme = "README.md"
 requires-python = ">=3.7"
-license = { text = "BSD 3-Clause License" }
+license = { text = "MIT" }
 authors = [
     { name = "Trevor Manz", email = "trevor.j.manz@gmail.com" }
 ]
