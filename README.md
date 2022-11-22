@@ -19,3 +19,22 @@ pane
 ```
 
 <img width="470" alt="example widget" src="https://user-images.githubusercontent.com/24403730/203362487-c1b9c676-188e-42f2-a7e4-fd7d1bd43d54.png">
+
+All inputs added to the `pane` as named
+[traitlets](https://traitlets.readthedocs.io/en/stable/), and can be subscribed
+to/updated like any other `ipywidget`.
+
+```python
+# subscribe to changes
+pane.observe(lambda change: ..., names=[
+    "checkbox",
+    "number",
+    "slider",
+    "color",
+    "text",
+])
+
+# update pane programatically
+pane.checkbox = False
+pane.text = "Some other text"
+```
