@@ -27,9 +27,9 @@ dependencies = [
 ]
 
 [project.urls]
-Documentation = "https://github.com/manzt/tweakpane#readme"
-Issues = "https://github.com/manzt/tweakpane/issues"
-Source = "https://github.com/manzt/tweakpane"
+Documentation = "https://github.com/manzt/ipytweakpane#readme"
+Issues = "https://github.com/manzt/ipytweakpane/issues"
+Source = "https://github.com/manzt/ipytweakpane"
 
 [tool.hatch.version]
 source = "vcs"
