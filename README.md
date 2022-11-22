@@ -1,6 +1,15 @@
-# (ipy)tweakpane
+# ipytweakpane
 
-Python bindings for [Tweakpane](https://cocopon.github.io/tweakpane/)
+IPython/Jupyter notebooks module for
+[Tweakpane UI](https://cocopon.github.io/tweakpane/).
+
+## installation
+
+```
+pip install tweakpane
+```
+
+## example
 
 ```python
 import tweakpane
@@ -20,9 +29,10 @@ pane
 
 <img width="470" alt="example widget" src="https://user-images.githubusercontent.com/24403730/203362487-c1b9c676-188e-42f2-a7e4-fd7d1bd43d54.png">
 
-All inputs added to the `pane` as named
-[traitlets](https://traitlets.readthedocs.io/en/stable/), and can be subscribed
-to/updated like any other `ipywidget`.
+Inputs are dynamically added to the `pane` as named
+[traitlets](https://traitlets.readthedocs.io/en/stable/) and can be subscribed
+to or updated like any other
+[`ipywidget`](https://ipywidgets.readthedocs.io/en/stable/).
 
 ```python
 # subscribe to changes
