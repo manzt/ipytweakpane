@@ -5,7 +5,7 @@ IPython/Jupyter notebooks module for
 
 ## installation
 
-```
+```bash
 pip install tweakpane
 ```
 
@@ -47,4 +47,11 @@ pane.observe(lambda change: ..., names=[
 # update pane programatically
 pane.checkbox = False
 pane.text = "Some other text"
+```
+
+## release
+
+```bash
+git tag -a vX.X.X  -m "X.X.X"
+git push --follow-tags
 ```
