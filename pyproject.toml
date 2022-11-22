@@ -1,45 +1,46 @@
-# https://peps.python.org/pep-0517/
 [build-system]
-build-backend = "setuptools.build_meta"
-requires = ["setuptools>=45", "setuptools_scm[toml]>=6.2"]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
 
-# https://peps.python.org/pep-0621/
 [project]
 name = "tweakpane"
+dynamic = ["version"]
 description = "Python bindings for Tweakpane UI"
 readme = "README.md"
 requires-python = ">=3.7"
-license = { text = "MIT" }
+license = "MIT"
+keywords = []
 authors = [
-    { name = "Trevor Manz", email = "trevor.j.manz@gmail.com" }
+  { name = "Trevor Manz", email = "trevor.j.manz@gmail.com" },
 ]
 classifiers = [
-    "Development Status :: 3 - Alpha",
-    "License :: OSI Approved :: BSD License",
-    "Natural Language :: English",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
 ]
-dynamic = ["version"]
 dependencies = [
-    "anywidget"
+  "anywidget"
 ]
 
 [project.urls]
-homepage = "https://github.com/manzt/tweakpane"
-repository = "https://github.com/manzt/tweakpane"
+Documentation = "https://github.com/manzt/tweakpane#readme"
+Issues = "https://github.com/manzt/tweakpane/issues"
+Source = "https://github.com/manzt/tweakpane"
 
-# https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html
-[tool.setuptools]
-include-package-data = true
-package-data = { "tweakpane" = ["index.js"] }
-package-dir = { "" = "src" }
-packages = { find = { where = ["src"] } }
-zip-safe = false
+[tool.hatch.version]
+source = "vcs"
 
-# https://github.com/pypa/setuptools_scm/#pyprojecttoml-usage
-[tool.setuptools_scm]
+[tool.hatch.envs.default]
+dependencies = [
+  "black",
+  "isort",
+]
+[tool.hatch.envs.default.scripts]
+fmt = "isort --profile black . && black ."
+
+[tool.isort]
+profile = "black"

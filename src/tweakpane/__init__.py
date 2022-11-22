@@ -1,16 +1,14 @@
-try:
-    from importlib.metadata import PackageNotFoundError, version
-except ImportError:
-    from importlib_metadata import PackageNotFoundError, version  # type: ignore
+from importlib.metadata import PackageNotFoundError, version
 
 try:
     __version__ = version("tweakpane")
-except PackageNotFoundError:  # pragma: no cover
-    __version__ = "0.0.0"
+except PackageNotFoundError:
+    __version__ = "uninstalled"
+
+import contextlib
 
 import anywidget
 import traitlets
-import contextlib
 
 __DEV__ = False
 
