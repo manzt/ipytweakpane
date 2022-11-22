@@ -1,5 +1,8 @@
 # (ipy)tweakpane
 
+[![PyPI](https://img.shields.io/pypi/v/tweakpane.svg?color=green)](https://pypi.org/project/tweakpane)
+[![License](https://img.shields.io/pypi/l/tweakpane.svg?color=green)](https://github.com/manzt/ipytweakpane/raw/main/LICENSE)
+
 IPython/Jupyter notebooks module for
 [Tweakpane UI](https://cocopon.github.io/tweakpane/).
 
