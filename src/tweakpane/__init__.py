@@ -22,7 +22,7 @@ else:
 
 
 class Pane(anywidget.AnyWidget):
-    _module = traitlets.Unicode(ESM).tag(sync=True)
+    _esm = traitlets.Unicode(ESM).tag(sync=True)
     _inputs = traitlets.List([]).tag(sync=True)
     _context = None
 
