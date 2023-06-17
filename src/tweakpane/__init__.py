@@ -1,28 +1,18 @@
+import contextlib
 from importlib.metadata import PackageNotFoundError, version
+import pathlib
+
+import anywidget
+import traitlets
 
 try:
     __version__ = version("tweakpane")
 except PackageNotFoundError:
     __version__ = "uninstalled"
 
-import contextlib
-
-import anywidget
-import traitlets
-
-__DEV__ = False
-
-if __DEV__:
-    ESM = "http://localhost:5173/src/tweakpane/index.js?anywidget"
-else:
-    import pathlib
-
-    src = pathlib.Path(__file__).parent / "index.js"
-    ESM = src.read_text()
-
 
 class Pane(anywidget.AnyWidget):
-    _esm = traitlets.Unicode(ESM).tag(sync=True)
+    _esm = pathlib.Path(__file__).parent / "index.js"
     _inputs = traitlets.List([]).tag(sync=True)
     _context = None
 

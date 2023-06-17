@@ -1,6 +1,6 @@
 import * as Tweakpane from "https://esm.sh/tweakpane@3";
 
-function addInput(pane, PARAMS, name, options, view) {
+function addInput(pane, PARAMS, name, options, model) {
 	pane.addInput(PARAMS, name, options).on("change", (e) => {
 		// tweakpane mutates PARAMS in place, so e.value is a reference
 		// to the original object. We need to clone objects so that
@@ -8,88 +8,79 @@ function addInput(pane, PARAMS, name, options, view) {
 		let value = typeof e.value === "object"
 			? structuredClone(e.value)
 			: e.value;
-		view.model.set(name, value, view);
-		view.model.save_changes();
+		model.set(name, value);
+		model.save_changes();
 	});
 
-	view.listenTo(view.model, `change:${name}`, (_model, value, context) => {
-		// only need to refresh if change comes from other JS views or Python
-		if (context?.cid === view.cid) {
-			return;
-		}
-		PARAMS[name] = value;
-		pane.refresh();
+	model.on(`change:${name}`, () => {
+		PARAMS[name] = model.get(name);
+		pane.refresh?.();
 	});
 }
 
-function addMonitor(pane, PARAMS, name, options, view) {
+function addMonitor(pane, PARAMS, name, options, model) {
 	pane.addMonitor(PARAMS, name, options);
-	view.listenTo(view.model, `change:${name}`, (_, value, ctx) => {
-		if (ctx?.cid === view.cid) {
-			return;
-		}
-		PARAMS[name] = value;
+	model.on(`change:${name}`, () => {
+		PARAMS[name] = model.get(name);
 	});
 }
 
-function addAll(pane, PARAMS, inputs, view) {
+function addAll(pane, PARAMS, inputs, model) {
 	for (let [type, ...rest] of inputs) {
-		if (type === "input" ) {
+		if (type === "input") {
 			let [name, options] = rest;
-			addInput(pane, PARAMS, name, options, view);
+			addInput(pane, PARAMS, name, options, model);
 			continue;
 		}
-		if (type === "monitor" ) {
+		if (type === "monitor") {
 			let [name, options] = rest;
-			addMonitor(pane, PARAMS, name, options, view);
+			addMonitor(pane, PARAMS, name, options, model);
 			continue;
 		}
 		if (type === "folder") {
 			let [folderOptions, inputs] = rest;
 			let folder = pane.addFolder(folderOptions);
-			addAll(folder, PARAMS, inputs, view);
+			addAll(folder, PARAMS, inputs, model);
 			continue;
 		}
 		throw new Error(`Tweakpane type '${type}' not supported.`);
 	}
-
 }
 
-function * getNames(inputs) {
+function* getNames(inputs) {
 	for (let [type, ...rest] of inputs) {
-		if (type === "input" ) {
-			yield rest[0]
+		if (type === "input") {
+			yield rest[0];
 			continue;
 		}
-		if (type === "monitor" ) {
-			yield rest[0]
+		if (type === "monitor") {
+			yield rest[0];
 			continue;
 		}
 		if (type === "folder") {
-			yield *getNames(rest[1])
+			yield* getNames(rest[1]);
 			continue;
 		}
 		throw new Error(`Tweakpane type '${type}' not supported.`);
-		
 	}
 }
 
-export function render(view) {
+export function render({ model, el }) {
 	function init(inputs) {
-		let pane = new Tweakpane.Pane({ container: view.el });
+		let pane = new Tweakpane.Pane({ container: el });
 		let PARAMS = {};
 		for (let name of getNames(inputs)) {
-			PARAMS[name] = view.model.get(name);
+			PARAMS[name] = model.get(name);
 		}
-		addAll(pane, PARAMS, inputs, view);
+		addAll(pane, PARAMS, inputs, model);
 		return () => {
 			pane.dispose();
-			view.stopListening(view.model);
+			model.off();
 		};
 	}
 
-	let dispose = init(view.model.get("_inputs"));
-	view.model.on("change:_inputs", (_, inputs) => {
+	let dispose = init(model.get("_inputs"));
+	model.on("change:_inputs", (_, inputs) => {
 		dispose();
 		dispose = init(inputs);
 	});
