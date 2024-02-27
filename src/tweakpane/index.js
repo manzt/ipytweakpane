@@ -65,7 +65,7 @@ function* getNames(inputs) {
 	}
 }
 
-export function render({ model, el }) {
+function render({ model, el }) {
 	function init(inputs) {
 		let pane = new Tweakpane.Pane({ container: el });
 		let PARAMS = {};
@@ -85,3 +85,5 @@ export function render({ model, el }) {
 		dispose = init(inputs);
 	});
 }
+
+export default { render };
