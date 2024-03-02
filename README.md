@@ -4,7 +4,7 @@
 [![License](https://img.shields.io/pypi/l/tweakpane.svg?color=green)](https://github.com/manzt/ipytweakpane/raw/main/LICENSE)
 
 IPython/Jupyter notebooks module for
-[Tweakpane UI](https://cocopon.github.io/tweakpane/).
+[Tweakpane UI](https://tweakpane.github.io/docs/).
 
 ## installation
 
