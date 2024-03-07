@@ -80,9 +80,9 @@ function render({ model, el }) {
 	}
 
 	let dispose = init(model.get("_inputs"));
-	model.on("change:_inputs", (_, inputs) => {
+	model.on("change:_inputs", () => {
 		dispose();
-		dispose = init(inputs);
+		dispose = init(model.get("_inputs"));
 	});
 }
 
